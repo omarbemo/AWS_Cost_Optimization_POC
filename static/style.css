@@ -337,3 +337,15 @@ pre {
         transform: translateY(0);
     }
 }
+
+.diff-added {
+    background-color: rgba(46, 160, 67, 0.3);
+    display: inline-block;
+    width: 100%;
+}
+
+.diff-removed {
+    background-color: rgba(248, 81, 73, 0.3);
+    display: inline-block;
+    width: 100%;
+}

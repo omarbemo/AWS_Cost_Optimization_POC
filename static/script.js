@@ -97,9 +97,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(data.error || 'Something went wrong processing the file.');
             }
 
-            // Populate Data
-            originalCodeEl.textContent = data.original_tf;
-            optimizedCodeEl.textContent = data.new_terraform;
+            // Diff Highlighting Logic
+            if (typeof Diff !== 'undefined') {
+                const diff = Diff.diffLines(data.original_tf, data.new_terraform);
+                
+                let originalHtml = '';
+                let optimizedHtml = '';
+                
+                diff.forEach(part => {
+                    // Escape HTML to prevent injection
+                    const safeValue = part.value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    
+                    if (part.added) {
+                        // Added lines only appear on the right side (optimized)
+                        optimizedHtml += `<span class="diff-added">${safeValue}</span>`;
+                    } else if (part.removed) {
+                        // Removed lines only appear on the left side (original)
+                        originalHtml += `<span class="diff-removed">${safeValue}</span>`;
+                    } else {
+                        // Unchanged lines appear on both sides
+                        originalHtml += safeValue;
+                        optimizedHtml += safeValue;
+                    }
+                });
+                
+                originalCodeEl.innerHTML = originalHtml;
+                optimizedCodeEl.innerHTML = optimizedHtml;
+            } else {
+                // Fallback if Diff library failed to load
+                originalCodeEl.textContent = data.original_tf;
+                optimizedCodeEl.textContent = data.new_terraform;
+            }
+
             renderSuggestions(data.results);
 
             // UI State: Success
