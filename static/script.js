@@ -101,7 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof Diff !== 'undefined') {
                 const originalStr = (data.original_tf || '').replace(/\r\n/g, '\n').trim();
                 const newStr = (data.new_terraform || '').replace(/\r\n/g, '\n').trim();
-                const diff = Diff.diffLines(originalStr, newStr);
+                // Ignore whitespace differences so formatting (like spaces before '=' doesn't trigger a diff)
+                const diff = Diff.diffLines(originalStr, newStr, { ignoreWhitespace: true });
                 
                 let originalHtml = '';
                 let optimizedHtml = '';
