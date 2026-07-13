@@ -19,8 +19,13 @@ def optimize():
         return jsonify({'error': 'No file part'}), 400
     
     file = request.files['file']
+    api_key = request.form.get('api_key')
+    
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
+        
+    if not api_key:
+        return jsonify({'error': 'Groq API Key is required'}), 400
         
     if file and file.filename.endswith('.tf'):
         filename = secure_filename(file.filename)
@@ -28,7 +33,7 @@ def optimize():
         file.save(filepath)
         
         try:
-            result = optimize_entire_tf_file(filepath)
+            result = optimize_entire_tf_file(filepath, api_key)
             
             # Read original tf to send back
             with open(filepath, 'r') as f:

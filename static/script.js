@@ -76,8 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
     optimizeBtn.addEventListener('click', async () => {
         if (!selectedFile) return;
 
+        const apiKey = document.getElementById('api-key').value.trim();
+        if (!apiKey) {
+            alert('Please enter your Groq API Key first.');
+            return;
+        }
+
         const formData = new FormData();
         formData.append('file', selectedFile);
+        formData.append('api_key', apiKey);
 
         // UI State: Loading
         optimizeBtn.disabled = true;

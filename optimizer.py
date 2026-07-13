@@ -4,14 +4,7 @@ from openai import OpenAI
 import tf_json_convert as tfc
 from tf_json_convert import terraform_to_resources, resources_to_terraform
 
-# Initialize the Groq client using the provided key as fallback
-groq_key = os.environ.get("GROQ_API_KEY")
-if not groq_key:
-    raise ValueError("GROQ_API_KEY environment variable is not set")
-client = OpenAI(
-    base_url="https://api.groq.com/openai/v1",
-    api_key=groq_key
-)
+
 
 MOCK_pricing_knowledge = {
     "aws_instance": """
@@ -130,7 +123,15 @@ def apply_suggestion_to_resource(llm_output: dict, original_resource: dict, tf_p
     return filled, provenance
 
 
-def optimize_entire_tf_file(tf_path: str, extra_hints: dict = None):
+def optimize_entire_tf_file(tf_path: str, api_key: str, extra_hints: dict = None):
+    if not api_key:
+        raise ValueError("GROQ API Key is required")
+        
+    client = OpenAI(
+        base_url="https://api.groq.com/openai/v1",
+        api_key=api_key
+    )
+    
     parsed_resources = terraform_to_resources(tf_path)
     extra_hints = extra_hints or {}
     results = []
