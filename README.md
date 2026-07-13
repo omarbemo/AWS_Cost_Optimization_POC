@@ -41,7 +41,6 @@ The application now runs as a local web server, giving you a beautiful drag-and-
 
 ### 1. Requirements
 - Python 3.8+ installed on your machine.
-- A free [Groq API key](https://console.groq.com/keys) (the app uses Groq's free-tier LLM API — no billing required).
 
 ### 2. Steps to Run Locally
 
@@ -58,7 +57,6 @@ The application now runs as a local web server, giving you a beautiful drag-and-
    *(or `flask run`)*
 5. **Open your browser** and navigate to: [http://localhost:5000](http://localhost:5000)
 6. **Test the app:**
-   - Enter your `Groq API Key` in the input field provided on the webpage.
    - Upload a `.tf` file (you can use one of the examples like an EC2 instance).
    - Click "Optimize Code" and watch the AI provide reasoning and updated Terraform code side-by-side!
 
