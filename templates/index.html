@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terraform Cost Optimizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>Terraform <span class="highlight">Optimizer</span></h1>
+            <p>Upload your .tf file to get AI-powered cost reduction suggestions.</p>
+        </header>
+
+        <main>
+            <section class="upload-section glass-panel">
+                <div class="upload-area" id="drop-zone">
+                    <div class="upload-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    </div>
+                    <h2>Drag & Drop your .tf file here</h2>
+                    <p>or</p>
+                    <input type="file" id="file-input" accept=".tf" hidden>
+                    <button class="btn primary-btn" id="browse-btn">Browse Files</button>
+                    <p class="file-name" id="file-name"></p>
+                </div>
+                <div class="action-area">
+                    <button class="btn action-btn" id="optimize-btn" disabled>Optimize Code</button>
+                </div>
+            </section>
+
+            <div class="loader-container" id="loader">
+                <div class="spinner"></div>
+                <p>Analyzing and optimizing your infrastructure...</p>
+            </div>
+
+            <section class="results-section hidden" id="results-section">
+                <div class="split-view">
+                    <div class="code-panel glass-panel">
+                        <h3>Original Code</h3>
+                        <pre><code id="original-code"></code></pre>
+                    </div>
+                    
+                    <div class="code-panel glass-panel">
+                        <h3>Optimized Code</h3>
+                        <pre><code id="optimized-code"></code></pre>
+                    </div>
+                </div>
+
+                <div class="suggestions-panel glass-panel">
+                    <h3>AI Reasoning & Provenance</h3>
+                    <div id="suggestions-container">
+                        <!-- Dynamic suggestions injected here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
