@@ -99,7 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Diff Highlighting Logic
             if (typeof Diff !== 'undefined') {
-                const diff = Diff.diffLines(data.original_tf, data.new_terraform);
+                const originalStr = (data.original_tf || '').replace(/\r\n/g, '\n').trim();
+                const newStr = (data.new_terraform || '').replace(/\r\n/g, '\n').trim();
+                const diff = Diff.diffLines(originalStr, newStr);
                 
                 let originalHtml = '';
                 let optimizedHtml = '';
