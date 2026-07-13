@@ -339,13 +339,11 @@ pre {
 }
 
 .diff-added {
-    background-color: rgba(46, 160, 67, 0.3);
-    display: inline-block;
-    width: 100%;
+    background-color: rgba(46, 160, 67, 0.4);
+    display: block;
 }
 
 .diff-removed {
-    background-color: rgba(248, 81, 73, 0.3);
-    display: inline-block;
-    width: 100%;
+    background-color: rgba(248, 81, 73, 0.4);
+    display: block;
 }

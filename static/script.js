@@ -108,20 +108,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 let optimizedHtml = '';
                 
                 diff.forEach(part => {
-                    // Escape HTML to prevent injection
-                    const safeValue = part.value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                    
-                    if (part.added) {
-                        // Added lines only appear on the right side (optimized)
-                        optimizedHtml += `<span class="diff-added">${safeValue}</span>`;
-                    } else if (part.removed) {
-                        // Removed lines only appear on the left side (original)
-                        originalHtml += `<span class="diff-removed">${safeValue}</span>`;
-                    } else {
-                        // Unchanged lines appear on both sides
-                        originalHtml += safeValue;
-                        optimizedHtml += safeValue;
+                    // Split the chunk into individual lines
+                    const lines = part.value.split('\n');
+                    // Remove the last empty element if the chunk ends with \n
+                    if (lines[lines.length - 1] === '') {
+                        lines.pop();
                     }
+                    
+                    lines.forEach(line => {
+                        const safeLine = line.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        
+                        if (part.added) {
+                            optimizedHtml += `<div class="diff-added">${safeLine}</div>`;
+                        } else if (part.removed) {
+                            originalHtml += `<div class="diff-removed">${safeLine}</div>`;
+                        } else {
+                            originalHtml += `<div>${safeLine}</div>`;
+                            optimizedHtml += `<div>${safeLine}</div>`;
+                        }
+                    });
                 });
                 
                 originalCodeEl.innerHTML = originalHtml;
