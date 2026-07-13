@@ -136,8 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 html += `<p><strong>Suggested Type:</strong> ${result.updated_resource.resource_type}</p>`;
                 
                 // Provenance
-                html += `<p style="margin-top: 1rem; font-weight: 600;">Data Sources:</p>`;
-                html += `<ul class="provenance-list">`;
+                html += `<details style="margin-top: 1rem; background: rgba(255,255,255,0.05); padding: 0.8rem; border-radius: 8px;">`;
+                html += `<summary style="font-weight: 600; cursor: pointer; color: var(--accent-color); outline: none;">Show Data Sources Details</summary>`;
+                html += `<ul class="provenance-list" style="margin-top: 0.8rem; padding-left: 1rem;">`;
                 
                 for (const [field, source] of Object.entries(result.provenance)) {
                     if (source !== 'missing') {
@@ -150,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 html += `</ul>`;
+                html += `</details>`;
             } else {
                 html += `<p>No valid optimization generated.</p>`;
             }
